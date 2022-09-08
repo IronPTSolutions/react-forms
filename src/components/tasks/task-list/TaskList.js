@@ -3,7 +3,7 @@ import TaskForm from "../task-form/TaskForm";
 import TaskItem from "../task-item/TaskItem";
 
 function TaskList() {
-  const [tasks, setTasks] = useState([{ description: 'Patata programing' }]);
+  const [tasks, setTasks] = useState([{ user: 'carlos', description: 'Patata programing', mode: 'secondary' }]);
   const handleTaskCreated = (task) => {
     setTasks((tasks) => {
       return [
@@ -12,12 +12,17 @@ function TaskList() {
       ]
     })
   }
+
+  const handleDeleteTask = (description) => {
+    setTasks(tasks => [...tasks].filter(task => task.description !== description))
+  }
+
   return (
     <>
-      <TaskForm className="mb-3" onTaskCreated={handleTaskCreated} />
+      <TaskForm className="mb-3" onTaskCreated={handleTaskCreated} inputInconClassName="text-info" />
       <ul className="list-group">
         {tasks.map((task) => (
-          <TaskItem key={task.description} {...task} />
+          <TaskItem key={task.description} {...task} onDeletedTask={handleDeleteTask} />
         ))}
       </ul>
     </>
